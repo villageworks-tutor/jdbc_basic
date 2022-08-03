@@ -34,9 +34,10 @@
 		削除：商品番号<input type="number" name="code" />の商品を<button type="submit" name="action" value="delete">削除</button>
 	</form>
 	
-<!--
-	修正：商品番号の価格
--->
+	<form action="ItemServlet" method="post">
+		修正：商品番号<input type="number" name="code" />の価格を<input type="number" name="price" />に<button type="submit" name="action" value="update">変更</button>
+	</form>
+	
 	<hr />
 	<table border="1">
 		<tr>
