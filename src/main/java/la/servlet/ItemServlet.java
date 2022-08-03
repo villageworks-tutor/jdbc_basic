@@ -88,8 +88,23 @@ public class ItemServlet extends HttpServlet {
 				// リクエストスコープに登録
 				request.setAttribute("items", list);
 				// 遷移先URLの設定
+				nextPage = "pages/showItemForm.jsp";				
+			} catch (DAOException e) {
+				e.printStackTrace();
+				throw new ServletException(e.getMessage());
+			}
+		} else if (action.equals("search")) {
+			try {
+				// リクエストパラメータを取得
+				String upper = request.getParameter("price");
+				int price = Integer.parseInt(upper);
+				// 指定された金額以下の商品を取得
+				ItemDAO dao = new ItemDAO();
+				List<ItemBean> list = dao.findByPrice(price);
+				// リクエストスコープに登録
+				request.setAttribute("items", list);
+				// 遷移先URLの設定
 				nextPage = "pages/showItemForm.jsp";
-				
 			} catch (DAOException e) {
 				e.printStackTrace();
 				throw new ServletException(e.getMessage());

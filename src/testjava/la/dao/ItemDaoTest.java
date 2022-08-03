@@ -32,6 +32,48 @@ class ItemDaoTest {
 	}
 	
 	@Nested
+	@DisplayName("ItemDAO#findByPriceメソッドのテストクラス")
+	class FindByPriceTest {
+		@Test
+		@DisplayName("【Test_22】500円以下の商品はない")
+		void test_22() throws Exception {
+			// setup
+			int target = 500;
+			int expected = 0;
+			// execute
+			List<ItemBean> list = sut.findByPrice(target);
+			int actual = list.size();
+			// verify
+			assertThat(actual, is(expected));
+		}
+		
+		@Test
+		@DisplayName("【Test_21】1000円以下の商品は価格の高い順に「The Racer」「パズルゲーム」「MLB Fun」である")
+		void test_21() throws Exception {
+			// setup
+			int target = 1000;
+			List<ItemBean> expectedList = new ArrayList<>();
+			expectedList.add(new ItemBean(5,"The Racer", 1000));
+			expectedList.add(new ItemBean(2,"MLB Fun", 980));
+			expectedList.add(new ItemBean(7,"パズルゲーム", 780));
+			
+			// execute
+			List<ItemBean> actualList = sut.findByPrice(target);
+			
+			// verify
+			if (actualList.size() > 0) {
+				for (int i = 0; i < actualList.size(); i++) {
+					ItemBean actual = actualList.get(i);
+					ItemBean expected = expectedList.get(i);
+					assertThat(actual.toString(), is(expected.toString()));
+				}
+			} else {
+				fail("テスト対象メソッドはまだ実装されていません。");
+			}
+		}
+	}
+	
+	@Nested
 	@DisplayName("ItemDAO#sortPriceメソッドのテストクラス")
 	class SortPriceTest {
 		@Test
