@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -64,5 +66,6 @@
 			<td>2200</td>
 		</tr> 
 	</table>
+	<p><a href="ItemServlet">トップページに戻る</a></p>
 </body>
 </html>
