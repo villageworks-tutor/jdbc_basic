@@ -7,6 +7,6 @@
 	</head>
 	<body>
 		<p><a href="ItemServlet?action=all">全商品表示</a></p>
-		<p><a href="ItemServlet?action=operation">商品操作</a></p>
+		<p><a href="ItemServlet?action=operations">商品操作</a></p>
 	</body>
 </html>
