@@ -160,4 +160,18 @@ public class ItemDAO {
 		}
 	}
 
+	public void deleteByPrimaryKey(int code) throws DAOException {
+		String sql = "DELETE FROM item WHERE code = ?";
+		try (// SQL実行オブジェクトを取得
+				PreparedStatement pstmt = this.conn.prepareStatement(sql);) {
+			// パラメータバインディング
+			pstmt.setInt(1, code);
+			// SQLを実行
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DAOException("レコードの操作に失敗しました。");
+		}
+	}
+
 }
