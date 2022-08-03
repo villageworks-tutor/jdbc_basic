@@ -52,8 +52,27 @@ public class ItemServlet extends HttpServlet {
 					nextPage = "pages/showItemForm.jsp";
 				}
 			} catch (DAOException e) {
-				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
+				throw new ServletException(e.getMessage());
+			}
+		} else if (action.equals("sort")) {
+			try {
+				// リクエストパラメータを取得
+				String key = request.getParameter("key");
+				// ソートキーによってソートされた商品リストを取得
+				ItemDAO dao = new ItemDAO();
+				boolean isAsc = false;
+				if (key == null || key.isEmpty() || key.equals("price_asc")) {
+					isAsc = true;
+				}
+				List<ItemBean> list = dao.sortPrice(isAsc);
+				// リクエストスコープに登録
+				request.setAttribute("items", list);
+				// 遷移先URLを設定
+				nextPage = "pages/showItemForm.jsp";
+			} catch (DAOException e) {
+				e.printStackTrace();
+				throw new ServletException(e.getMessage());
 			}
 		}
 		// 画面遷移　

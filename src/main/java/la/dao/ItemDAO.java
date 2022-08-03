@@ -68,4 +68,42 @@ public class ItemDAO {
 		}
 	}
 
+	/**
+	 * 価格について指定された並べ方すべてので商品を並べ替える。
+	 * @param isAsc 昇順で並べ替える場合はtrue、それ以外はfalse
+	 * @return List<ItemBean> 価格について並べ替えられた他商品リスト
+	 * @throws DAOException
+	 */
+	public List<ItemBean> sortPrice(boolean isAsc) throws DAOException {
+		// 実行するSQLの共通部分を設定
+		String sql = "SELECT code, name, price FROM item ORDER BY price ";
+		// 引数によって実行するSQLを変更
+		if (isAsc) { // 昇順の場合
+			sql += "ASC";
+		} else { // 降順の場合
+			sql += "DESC";
+		}
+		try (// SQL実効オブジェクトを取得
+			 PreparedStatement pstmt = this.conn.prepareStatement(sql);
+			 // SQLの実行と結果セットの取得
+			 ResultSet rs = pstmt.executeQuery();) {
+			List<ItemBean> list = new ArrayList<>();
+			// 結果セットから商品リストを取得
+			while (rs.next()) {
+				// 1レコード分をインスタンス化
+				ItemBean bean = new ItemBean();
+				bean.setCode(rs.getInt("code"));
+				bean.setName(rs.getString("name"));
+				bean.setPrice(rs.getInt("price"));
+				// 商品リストに追加
+				list.add(bean);
+			}
+			// 商品リストを返却
+			return list;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DAOException("レコードの取得に失敗しました。");
+		}
+	}
+
 }
