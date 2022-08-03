@@ -37,21 +37,26 @@ public class ItemServlet extends HttpServlet {
 		if (action == null || action.isEmpty()) {
 			// actionキー未送信または未入力の場合：トップページに遷移
 			nextPage = "pages/top.jsp";
-		} else if (action.equals("all")) {
+		} else if (action.equals("all") || action.equals("operations")) {
+			// 全商品表示
 			try {
 				// 全商品を取得
 				ItemDAO dao = new ItemDAO();
 				List<ItemBean> list = dao.findAll();
 				// 取得した商品リストをリクエストスコープに登録
 				request.setAttribute("items", list);
-				// 全商品表示ページに遷移
-				nextPage = "pages/showAllItem.jsp";
+				// actionによって遷移先を切り替え
+				if (action.equals("all")) {
+					nextPage = "pages/showAllItem.jsp";
+				} else {
+					nextPage = "pages/showItemForm.jsp";
+				}
 			} catch (DAOException e) {
 				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
 			}
 		}
-		// 画面遷移
+		// 画面遷移　
 		RequestDispatcher dispatcher = request.getRequestDispatcher(nextPage);
 		dispatcher.forward(request, response);
 	}
