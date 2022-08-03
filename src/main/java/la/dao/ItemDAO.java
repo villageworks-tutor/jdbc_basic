@@ -106,4 +106,24 @@ public class ItemDAO {
 		}
 	}
 
+	/**
+	 * 商品を追加する。
+	 * @param name 追加する商品の商品名
+	 * @param price 追加する商品の価格
+	 * @throws DAOException
+	 */
+	public void addItem(String name, int price) throws DAOException {
+		String sql = "INSERT INTO item (name, price) VALUES (?, ?)";
+		try (PreparedStatement pstmt = this.conn.prepareStatement(sql);) {
+			// パラメータバインディング
+			pstmt.setString(1, name);
+			pstmt.setInt(2, price);
+			// SQLの実行
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DAOException("レコードの操作に失敗しました。");
+		}
+	}
+
 }
