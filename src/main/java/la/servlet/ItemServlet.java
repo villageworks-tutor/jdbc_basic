@@ -127,6 +127,27 @@ public class ItemServlet extends HttpServlet {
 				e.printStackTrace();
 				throw new ServletException(e.getMessage());
 			}
+		} else if (action.equals("update")) {
+			// リクエストパラメータを取得
+			String codeString = request.getParameter("code");
+			String priceString = request.getParameter("price");
+			int code = Integer.parseInt(codeString);
+			int price = Integer.parseInt(priceString);
+			
+			try {
+				// 商品の情報を変更
+				ItemDAO dao = new ItemDAO();
+				dao.update(code, price);
+				// 全商品を取得
+				List<ItemBean> list = dao.findAll();
+				// リクエストスコープに登録
+				request.setAttribute("items", list);
+				// 遷移先URLの設定
+				nextPage = "pages/showItemForm.jsp";
+			} catch (DAOException e) {
+				e.printStackTrace();
+				throw new ServletException(e.getMessage());
+			}
 		}
 		// 画面遷移　
 		RequestDispatcher dispatcher = request.getRequestDispatcher(nextPage);

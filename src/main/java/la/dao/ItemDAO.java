@@ -160,12 +160,38 @@ public class ItemDAO {
 		}
 	}
 
+	/**
+	 * 指定された商品番号の商品を削除する。
+	 * @param code 削除対象の商品番号
+	 * @throws DAOException
+	 */
 	public void deleteByPrimaryKey(int code) throws DAOException {
 		String sql = "DELETE FROM item WHERE code = ?";
 		try (// SQL実行オブジェクトを取得
 				PreparedStatement pstmt = this.conn.prepareStatement(sql);) {
 			// パラメータバインディング
 			pstmt.setInt(1, code);
+			// SQLを実行
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DAOException("レコードの操作に失敗しました。");
+		}
+	}
+
+	/**
+	 * 指定された商品の価格を更新する。
+	 * @param code 更新対象の商品番号
+	 * @param price 更新後の価格
+	 * @throws DAOException
+	 */
+	public void update(int code, int price) throws DAOException {
+		String sql = "UPDATE item SET price = ? WHERE code = ?";
+		try (// SQL実行オブジェクトを取得
+			 PreparedStatement pstmt = this.conn.prepareStatement(sql);) {
+			// パラメータバインディング
+			pstmt.setInt(1, price);
+			pstmt.setInt(2, code);
 			// SQLを実行
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
