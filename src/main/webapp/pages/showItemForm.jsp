@@ -5,11 +5,27 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Show All Item</title>
+	<style>
+		input[type="text"] {
+			width: 10rem;
+			margin: 0 0.75rem 0 0.25rem;
+		}
+		input[type="number"] {
+			width: 5rem;
+			margin: 0 0.75rem 0 0.25rem;
+		}
+		button {
+			margin: 0 0.75rem;
+		}
+	</style>
 </head>
 <body>
-	ソート：<a href="ItemServlet?action=sort&key=price_asc">値段の低い順</a>、<a href="ItemServlet?action=sort&key=price_desc">値段の高い順</a>
+	ソート：<a href="ItemServlet?action=sort&key=price_asc">値段の低い順</a>、<a href="ItemServlet?action=sort&key=price_desc">値段の高い順</a><br />	
+	
+	<form action="ItemServlet" method="post">
+		追加：商品名<input type="text" name="name" /> 価格<input type="number" name="price" />円を<button type="submit" name="action" value="add">追加</button>
+	</form>
 <!--
-	追加：商品名価格円
 	検索：円以下の商品を
 	削除：商品番号
 	修正：商品番号の価格
