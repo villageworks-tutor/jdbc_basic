@@ -21,5 +21,6 @@
 		</tr>
 		</c:forEach>
 	</table>
+	<p><a href="ItemServlet">トップページに戻る</a></p>
 </body>
 </html>
