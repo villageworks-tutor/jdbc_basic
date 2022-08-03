@@ -126,4 +126,38 @@ public class ItemDAO {
 		}
 	}
 
+	/**
+	 * 指定した価格以下の商品を取得する。
+	 * @param price 価格の上限
+	 * @return List<ItemBean> 商品リスト
+	 * @throws DAOException
+	 */
+	public List<ItemBean> findByPrice(int price) throws DAOException {
+		String sql = "SELECT code, name, price FROM item WHERE price <= ? ORDER BY price DESC";
+		try (PreparedStatement pstmt = this.conn.prepareStatement(sql);) {
+			// パラメータバインディング
+			pstmt.setInt(1, price);
+			try (// SQLの実行と結果セットの取得
+				 ResultSet rs = pstmt.executeQuery();) {
+				// 商品リストの初期化
+				List<ItemBean> list = new ArrayList<>();
+				// 結果セットから商品リストを生成
+				while (rs.next()) {
+					// 1レコード分をインスタンス化
+					ItemBean bean = new ItemBean();
+					bean.setCode(rs.getInt("code"));
+					bean.setName(rs.getString("name"));
+					bean.setPrice(rs.getInt("price"));
+					// 商品リストに追加
+					list.add(bean);
+				}
+				// 商品リストを返却
+				return list;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DAOException("レコードの取得に失敗しました。");
+		}
+	}
+
 }

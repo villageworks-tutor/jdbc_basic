@@ -25,8 +25,11 @@
 	<form action="ItemServlet" method="post">
 		追加：商品名<input type="text" name="name" /> 価格<input type="number" name="price" />円を<button type="submit" name="action" value="add">追加</button>
 	</form>
+	
+	<form action="ItemServlet" method="post">
+		検索：<input type="number" name="price" />円以下の商品を<button type="submit" name="action" value="search">検索</button>
+	</form>
 <!--
-	検索：円以下の商品を
 	削除：商品番号
 	修正：商品番号の価格
 -->
