@@ -29,8 +29,12 @@
 	<form action="ItemServlet" method="post">
 		検索：<input type="number" name="price" />円以下の商品を<button type="submit" name="action" value="search">検索</button>
 	</form>
+	
+	<form action="ItemServlet" method="post">
+		削除：商品番号<input type="number" name="code" />の商品を<button type="submit" name="action" value="delete">削除</button>
+	</form>
+	
 <!--
-	削除：商品番号
 	修正：商品番号の価格
 -->
 	<hr />
